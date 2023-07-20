@@ -111,23 +111,32 @@ int deletar() //Função responsavel por deletar os usuários no sistema
 	char cpf[40];
 	//Final do criação de variáveis/string
 
-	printf("Digite o CPF do usuário a ser deletado: "); //Coletando informação do usuário
+	printf("\t Digite o CPF do usuário a ser deletado: "); //Coletando informação do usuário
 	scanf("%s",cpf);
 	
-	remove(cpf); //Deletar o arquivo
+	FILE *file;  //Acessar os arquivos
+		file = fopen(cpf,"r"); //Ler o arquivo
+		fclose(file); //Fecha o arquivo
 	
-	FILE *file; //Acessar os arquivos
-	file = fopen(cpf,"r"); //Ler o arquivo
+		if(file != NULL) //Se houver um arquivo com as informações solicitadas, faça
+		{
+			FILE *file; //Acessar os arquivos
+			remove(cpf); //Deletar o arquivo
+			file = fopen(cpf,"r"); //Ler o arquivo
 	
-	if(file == NULL) //Caso não haja arquivo com as informações solicitadas, faça
-	{
-		printf("\n");
-		printf("O usuário não se encontra mais no sistema!. \n\n");
-		system("pause");
-	}
-	
-	fclose(file); //Fecha o arquivo
+			if(file == NULL) //Se houver um arquivo com as informações solicitadas, faça
+			{
+				printf("\n\t O usuário não se encontra mais no sistema!. \n\n");
+				fclose(file); //Fecha o arquivo
+			}	
+				
+		}
 
+		else //Caso não haja arquivo com as informações solicitadas, faça
+			printf("\n\t Não há nenhum usuário com este CPF!. \n\n");
+			system("pause");
+			fclose(file); //Fecha o arquivo
+	
 }
 
 int main()
